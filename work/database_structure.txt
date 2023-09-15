@@ -1,0 +1,35 @@
+Data base structure:
+
+1. Client Model
+
+- First name
+- Last name
+- Gender
+- Contact (Foreign Key Contact Model)
+- History (Foreign Key Orders Model)
+
+2. Contact Model
+
+- Contact type
+- Contact information (Foreign Key Client Model)
+
+3. Service Model
+
+- Service name
+- Service cost
+
+4. Consumables
+
+- Name of consumables
+
+5. Income_Expenses
+
+- Client_id (Foreign Key Client Model)
+- Service_id (Foreign Key Service Model)
+- Consumables_id (Foreign Key Consumables Model)
+- Entrepreneur tax
+- Rent
+- Tips
+- Summa
+- Date
+- Income_Expenses (Bool)
