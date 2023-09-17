@@ -5,31 +5,44 @@ Data base structure:
 - First name
 - Last name
 - Gender
-- Contact (Foreign Key Contact Model)
-- History (Foreign Key Orders Model)
+- Registration date
 
-2. Contact Model
+2. Orders Model
+
+- Client_name (Foreign Key Client Model)
+- Order name (Foreign Key Service Model)
+- Date
+- Payment
+
+3. Contact Model
 
 - Contact type
 - Contact information (Foreign Key Client Model)
 
-3. Service Model
+4. Service Model
 
 - Service name
 - Service cost
 
-4. Consumables
+5. Consumables_materials
 
-- Name of consumables
+- Type of consumables_material
+- Name of consumables_material
+- Amount of consumables_material
 
-5. Income_Expenses
+6. Income
 
-- Client_id (Foreign Key Client Model)
-- Service_id (Foreign Key Service Model)
-- Consumables_id (Foreign Key Consumables Model)
-- Entrepreneur tax
-- Rent
-- Tips
+- Client (Foreign Key Client Model)
+- Order (Foreign Key Order Model)
+- Sale_of_cosmetics (Foreign Key Consumables_materials Model)
+- Tea_money
+- Summa
+- Date (Foreign Key Orders Model)
+
+7. Expenses
+
+- Consumables_materials (Foreign Key Consumables_materials Model)
+- Business tax
+- Chair rental
 - Summa
 - Date
-- Income_Expenses (Bool)
