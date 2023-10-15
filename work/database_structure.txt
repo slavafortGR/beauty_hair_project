@@ -1,48 +1,70 @@
-Data base structure:
+Database structure:
 
-1. Client Model
+number_orders = db.Table(
+    "number_orders",
+    db.Column("client_id", db.Integer, db.ForeignKey("clients.id"))
+    db.Column("orders_id", db.Integer, db.ForeignKey("orders.id"))
+)
 
-- First name
-- Last name
-- Gender
-- Registration date
 
-2. Orders Model
+class Client(db.Model):
+    __tablename__ = "clients"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    last_name = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(30), nullable=False)
+    gender = db.Column(db.String(1), nullable=False)
+    contact = db.Column(db.Integer, db.ForeignKey("contacts.id"), nullable=False)
+    orders_done = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
 
-- Client_name (Foreign Key Client Model)
-- Order name (Foreign Key Service Model)
-- Date
-- Payment
 
-3. Contact Model
+class Contact(db.Model):
+    __tablename__ = "contacts"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    phone_number = db.Column(db.String, nullable=False)
 
-- Contact type
-- Contact information (Foreign Key Client Model)
 
-4. Service Model
+class Order(db.Model):
+    __tablename__ = "orders"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(Date, nullable=False, default=datetime.utcnow().date())
+    start_time = db.Column(DateTime, nullable=False)
+    end_time = db.Column(DateTime, nullable=False)
+    order_name = db.Column(db.Integer, ForeignKey("services_products.id"), nullable=False)
+    sale_of_cosmetics = db.Column(db.Integer, ForeignKey("services_products.id"), nullable=True)
+    tea_money = db.Column(db.Float, nullable=True)
+    orders = db.relationship("Order", secondary=number_orders, backref="orders")
 
-- Service name
-- Service cost
 
-5. Consumables_materials
+class ServiceProduct(db.Model):
+    __tablename__ = "services_products"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    service_name = db.Column(db.String(100), nullable=False)
+    service_cost = db.Column(db.Float, nullable=False)
+    product_name = db.Column(db.String(100), nullable=False)
+    product_cost = db.Column(db.Float, nullable=False)
 
-- Type of consumables_material
-- Name of consumables_material
-- Amount of consumables_material
 
-6. Income
+class Storage(db.Model):
+    __tablename__ = "materials"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String, nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
 
-- Client (Foreign Key Client Model)
-- Order (Foreign Key Order Model)
-- Sale_of_cosmetics (Foreign Key Consumables_materials Model)
-- Tea_money
-- Summa
-- Date (Foreign Key Orders Model)
 
-7. Expenses
+class Expense(db.Model):
+    __tablename__ = "expenses"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    private_entrepreneur_tax = db.Column(db.Float, nullable=False)
+    chair_rental = db.Column(db.Float, nullable=False)
+    materials = db.Column(db.Float, nullable=False)
+    advertising = db.Column(db.Float, nullable=False)
 
-- Consumables_materials (Foreign Key Consumables_materials Model)
-- Business tax
-- Chair rental
-- Summa
-- Date
+
+class Income(db.Model):
+    __tablename__ = "incomes"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    income_from_orders = db.Column(db.Float, nullable=False)
+    sales_income = db.Column(db.Float, nullable=False)
+    income_from_tips = db.Column(db.Float, nullable=False)
+    total_income = db.Column(db.Float, nullable=False)
