@@ -1,26 +1,17 @@
 Database structure:
 
-number_orders = db.Table(
-    "number_orders",
-    db.Column("client_id", db.Integer, db.ForeignKey("clients.id"))
-    db.Column("orders_id", db.Integer, db.ForeignKey("orders.id"))
-)
-
-
 class Client(db.Model):
     __tablename__ = "clients"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     last_name = db.Column(db.String(30), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     gender = db.Column(db.String(1), nullable=False)
-    contact = db.Column(db.Integer, db.ForeignKey("contacts.id"), nullable=False)
-    orders_done = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
 
 
 class Contact(db.Model):
     __tablename__ = "contacts"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    phone_number = db.Column(db.String, nullable=False)
+    phone_number = db.Column(db.Integer, db.ForeignKey("client.id"))
 
 
 class Order(db.Model):
@@ -29,42 +20,53 @@ class Order(db.Model):
     date = db.Column(Date, nullable=False, default=datetime.utcnow().date())
     start_time = db.Column(DateTime, nullable=False)
     end_time = db.Column(DateTime, nullable=False)
-    order_name = db.Column(db.Integer, ForeignKey("services_products.id"), nullable=False)
-    sale_of_cosmetics = db.Column(db.Integer, ForeignKey("services_products.id"), nullable=True)
-    tea_money = db.Column(db.Float, nullable=True)
-    orders = db.relationship("Order", secondary=number_orders, backref="orders")
-
-
-class ServiceProduct(db.Model):
-    __tablename__ = "services_products"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    service_name = db.Column(db.String(100), nullable=False)
-    service_cost = db.Column(db.Float, nullable=False)
-    product_name = db.Column(db.String(100), nullable=False)
-    product_cost = db.Column(db.Float, nullable=False)
-
-
-class Storage(db.Model):
-    __tablename__ = "materials"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-
-
-class Expense(db.Model):
-    __tablename__ = "expenses"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    private_entrepreneur_tax = db.Column(db.Float, nullable=False)
-    chair_rental = db.Column(db.Float, nullable=False)
-    materials = db.Column(db.Float, nullable=False)
-    advertising = db.Column(db.Float, nullable=False)
+    service = db.Column(db.Integer, ForeignKey("services.id"), nullable=False)
+    sale_of_products = db.Column(db.Integer, ForeignKey("products.id"), nullable=False)
+    tips = db.Column(db.Integer, ForeignKey("incomes.id"), nullable=True)
+    orders_done = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
 
 
 class Income(db.Model):
     __tablename__ = "incomes"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    income_from_orders = db.Column(db.Float, nullable=False)
-    sales_income = db.Column(db.Float, nullable=False)
-    income_from_tips = db.Column(db.Float, nullable=False)
+    date = db.Column(Date, nullable=False, default=datetime.utcnow().date())
+    service_type = db.Column(db.Integer, ForeignKey("services_types.id"), nullable=False)
     total_income = db.Column(db.Float, nullable=False)
+
+
+class Product(db.Model):
+    __tablename__ = "products"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    product_name = db.Column(db.String(50), nullable=False)
+    brand = db.Column(db.String(50), nullable=False)
+    cost = db.Column(db.Float, nullable=False)
+
+
+class Service(db.Model):
+    __tablename__ = "services"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    service_name = db.Column(db.String(100), nullable=False)
+    cost = db.Column(db.Float, nullable=False)
+
+
+class ServiceType(db.Model):
+    __tablename__ = "services_types"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(10))
+
+
+class Store(db.Model):
+    __tablename__ = "materials"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    amount = db.Column(db.Integer, nullable=False)
+    product = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
+
+
+class Expense(db.Model):
+    __tablename__ = "expenses"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    private_tax = db.Column(db.Float, nullable=False)
+    chair_rental = db.Column(db.Float, nullable=False)
+    materials = db.Column(db.Float, nullable=False)
+    advertising = db.Column(db.Float, nullable=False)
+    smn = db.Column(db.Float, nullable=False)
