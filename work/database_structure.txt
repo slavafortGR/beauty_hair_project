@@ -6,6 +6,7 @@ class Client(db.Model):
     last_name = db.Column(db.String(30), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     gender = db.Column(db.String(1), nullable=False)
+    orders_done = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
 
 
 class Contact(db.Model):
@@ -20,10 +21,10 @@ class Order(db.Model):
     date = db.Column(Date, nullable=False, default=datetime.utcnow().date())
     start_time = db.Column(DateTime, nullable=False)
     end_time = db.Column(DateTime, nullable=False)
+    client_id = db.Column(db.Integer, ForeignKey("clients.id"), nullable=False)
     service = db.Column(db.Integer, ForeignKey("services.id"), nullable=False)
     sale_of_products = db.Column(db.Integer, ForeignKey("products.id"), nullable=False)
-    tips = db.Column(db.Integer, ForeignKey("incomes.id"), nullable=True)
-    orders_done = db.Column(db.Integer, db.ForeignKey("clients.id"), nullable=False)
+    tips = db.Column(db.Integer, ForeignKey("services_types.id"), nullable=True)
 
 
 class Income(db.Model):
@@ -40,6 +41,7 @@ class Product(db.Model):
     product_name = db.Column(db.String(50), nullable=False)
     brand = db.Column(db.String(50), nullable=False)
     cost = db.Column(db.Float, nullable=False)
+    service_type_id = db.Column(db.Integer, db.ForeignKey("services_types.id"), nullable=False)
 
 
 class Service(db.Model):
@@ -47,6 +49,7 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     service_name = db.Column(db.String(100), nullable=False)
     cost = db.Column(db.Float, nullable=False)
+    service_type_id = db.Column(db.Integer, db.ForeignKey("services_types.id"), nullable=False)
 
 
 class ServiceType(db.Model):
@@ -69,4 +72,4 @@ class Expense(db.Model):
     chair_rental = db.Column(db.Float, nullable=False)
     materials = db.Column(db.Float, nullable=False)
     advertising = db.Column(db.Float, nullable=False)
-    smn = db.Column(db.Float, nullable=False)
+    sum = db.Column(db.Float, nullable=False)
