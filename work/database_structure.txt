@@ -21,14 +21,13 @@ CREATE TABLE IF NOT EXISTS orders (
 id int NOT NULL AUTO_INCREMENT,
 start_time DATATIME,
 end_time DATATIME,
-service_sale_tips INT,
+FOREIGN KEY (service_sale_tips) REFERENCES incomes(id),
 FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
 CREATE TABLE IF NOT EXISTS incomes (
 id int NOT NULL AUTO_INCREMENT,
 name VARCHAR(45),
-FOREIGN KEY (order_id) REFERENCES orders(service_sale_tips),
 FOREIGN KEY (good_id) REFERENCES goods(id)
 );
 
@@ -43,7 +42,8 @@ CREATE TABLE IF NOT EXISTS store (
 id int NOT NULL AUTO_INCREMENT,
 product VARCHAR(45),
 amount INT,
-FOREIGN KEY (product_id) REFERENCES goods(id)
+FOREIGN KEY (buying_cosmetic_id) REFERENCES expenses(amount),
+FOREIGN KEY (selling_cosmetic_id) REFERENCES orders(id)
 );
 
 CREATE TABLE IF NOT EXISTS expenses (
@@ -51,6 +51,5 @@ id int NOT NULL AUTO_INCREMENT,
 business_tax FLOAT,
 rent FLOAT,
 buying_cosmetics FLOAT,
-advertising FLOAT,
-FOREIGN KEY (buying_cosmetic_id) REFERENCES store(id)
+advertising FLOAT
 )
