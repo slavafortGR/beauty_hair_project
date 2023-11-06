@@ -28,22 +28,22 @@ FOREIGN KEY (client_id) REFERENCES clients(id)
 CREATE TABLE IF NOT EXISTS incomes (
 id int NOT NULL AUTO_INCREMENT,
 name VARCHAR(45),
-FOREIGN KEY (order_id) REFERENCES orders(id)
-FOREIGN KEY (goods_id) REFERENCES goods(id)
+FOREIGN KEY (order_id) REFERENCES orders(service_sale_tips),
+FOREIGN KEY (good_id) REFERENCES goods(id)
 );
 
 CREATE TABLE IF NOT EXISTS goods (
 id int NOT NULL AUTO_INCREMENT,
 name VARCHAR(128),
-price FLOAT,
 type VARCHAR(10),
+price FLOAT
 );
 
 CREATE TABLE IF NOT EXISTS store (
 id int NOT NULL AUTO_INCREMENT,
 product VARCHAR(45),
 amount INT,
-FOREIGN KEY (goods_id) REFERENCES goods(id)
+FOREIGN KEY (product_id) REFERENCES goods(id)
 );
 
 CREATE TABLE IF NOT EXISTS expenses (
@@ -52,5 +52,5 @@ business_tax FLOAT,
 rent FLOAT,
 buying_cosmetics FLOAT,
 advertising FLOAT,
-FOREIGN KEY (buying_cosmetics_id) REFERENCES goods(id)
+FOREIGN KEY (buying_cosmetic_id) REFERENCES store(id)
 )
