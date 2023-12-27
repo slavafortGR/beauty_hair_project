@@ -38,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'dashboard',
-    'calendar_',
-    'categories',
-    'goods',
-    'orders',
-    'report',
-    'store',
-    'transactions',
+    'dashboard.apps.DashboardConfig',
+    'calendar_.apps.CalendarConfig',
+    'categories.apps.CategoriesConfig',
+    'goods.apps.GoodsConfig',
+    'orders.apps.OrdersConfig',
+    'report.apps.ReportConfig',
+    'store.apps.StoreConfig',
+    'transactions.apps.TransactionsConfig',
 ]
 
 MIDDLEWARE = [
