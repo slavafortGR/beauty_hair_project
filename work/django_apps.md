@@ -10,11 +10,11 @@ dashboard (model)
 client + contact (models)
 
 
-### orders app
+### orders app +
 order  (model)
 record  (model)
 
-### categories app
+### categories app +
 *incomes cats*  (model)
 - service
 - goods
@@ -26,23 +26,22 @@ record  (model)
 - advertising
 - consumables
 
-### transactions app
+### transactions app +
 income  + expense  (models)
 
 
-### goods app
+### goods app +
 good  (model)
 
 
-### store app
+### store app +
 store (model)
 
 
-### calendar app
+### calendar_ app +
 (google calendar API)
 calendar (model) ???
 
 
-### reports app
+### reports app +
 report (model)
-
