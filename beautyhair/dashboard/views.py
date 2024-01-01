@@ -1,5 +1,5 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("<h1>Beauty Hair main page</h1>")
+    return render(request, "dashboard/index.html", {"title": "Главная страница"})
