@@ -7,7 +7,8 @@ dashboard (model)
 
 
 ### clients app +
-client + contact (models)
+client (model)
+contact (model)
 
 
 ### orders app +
