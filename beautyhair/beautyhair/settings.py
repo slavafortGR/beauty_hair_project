@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'dashboard.apps.DashboardConfig',
+    'clients.apps.ClientsConfig',
     'calendar.apps.CalendarConfig',
     'categories.apps.CategoriesConfig',
     'goods.apps.GoodsConfig',
