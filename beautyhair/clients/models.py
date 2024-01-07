@@ -11,5 +11,7 @@ class Client(models.Model):
 class Contact(models.Model):
     owner = models.ForeignKey(Client, on_delete=models.CASCADE)
     value = models.CharField(max_length=160)
-    value_type = models.IntegerField()
-    primary_contact = models.SmallIntegerField()
+    kind = models.IntegerField(
+        help_text="types: 0 - phone, 1 - telegram, 2 - viber, 3 - whatsapp, 4 - instagram, 5 - facebook"
+    )
+    primary = models.BooleanField(default=False)
