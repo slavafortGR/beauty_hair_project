@@ -39,13 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'dashboard.apps.DashboardConfig',
-    'calendar.apps.CalendarConfig',
+    'gcalendar.apps.CalendarConfig',
     'categories.apps.CategoriesConfig',
     'goods.apps.GoodsConfig',
     'orders.apps.OrdersConfig',
     'reports.apps.ReportsConfig',
     'store.apps.StoreConfig',
     'transactions.apps.TransactionsConfig',
+    'siteconfig',
 ]
 
 MIDDLEWARE = [

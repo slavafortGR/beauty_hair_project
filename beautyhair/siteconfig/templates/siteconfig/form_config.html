@@ -1,0 +1,128 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h2 class="title is-3">{{ title }}</h2>
+
+<form method="post" class="form" enctype="multipart/form-data" id="configForm">
+    {% csrf_token %}
+
+    <div class="notification">
+        <p>Instead of manually entering values for all calendar fields, you can upload a JSON from Google:</p>
+    </div>
+
+    <div class="file">
+      <label class="file-label">
+        <input class="file-input" type="file" name="json_file" id="json_file_input">
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label">
+            Choose a file…
+          </span>
+        </span>
+      </label>
+    </div>
+
+
+<!--    <div class="file">-->
+<!--        <label class="file-label">-->
+<!--            <input class="file-input file-icon" type="file" name="json_file" id="json_file_input">-->
+<!--            <span class="file-cta">-->
+<!--                <span class="file-label">Google JSON file</span>-->
+<!--            </span>-->
+<!--        </label>-->
+<!--    </div>-->
+
+    <hr />
+
+    <div class="box">
+        <h3 class="title is-4">Google Calendar Settings</h3>
+        <div class="field">
+            {{ form.gcal_type.label_tag }} {{ form.gcal_type }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_project_id.label_tag }} {{ form.gcal_project_id }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_private_key_id.label_tag }} {{ form.gcal_private_key_id }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_private_key.label_tag }} {{ form.gcal_private_key }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_client_email.label_tag }} {{ form.gcal_client_email }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_client_id.label_tag }} {{ form.gcal_client_id }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_auth_uri.label_tag }} {{ form.gcal_auth_uri }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_token_uri.label_tag }} {{ form.gcal_token_uri }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_auth_provider_x509_cert_url.label_tag }} {{ form.gcal_auth_provider_x509_cert_url }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_client_x509_cert_url.label_tag }} {{ form.gcal_client_x509_cert_url }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_universe_domain.label_tag }} {{ form.gcal_universe_domain }}
+        </div>
+
+        <div class="field">
+            {{ form.gcal_scopes.label_tag }} {{ form.gcal_scopes }}
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="box">
+        <h3 class="title is-4">Main Settings</h3>
+        <div class="field">
+            {{ form.main_shop_name.label_tag }} {{ form.main_shop_name }}
+        </div>
+
+        <div class="field">
+            {{ form.main_color_scheme.label_tag }} {{ form.main_color_scheme }}
+        </div>
+
+        <div class="field">
+            {{ form.main_begin_time.label_tag }} {{ form.main_begin_time }}
+        </div>
+
+        <div class="field">
+            {{ form.main_end_time.label_tag }} {{ form.main_end_time }}
+        </div>
+    </div>
+
+    <button type="submit" class="button is-primary">Save</button>
+</form>
+
+{% if include_js %}
+    <script>
+        document.getElementById('json_file_input').addEventListener('change', function() {
+            let form = document.getElementById('configForm');
+            let isFileSelected = !!this.files.length;
+
+            Array.from(form_config.elements).forEach(function(input) {
+                if (input.name.startsWith('gcal_')) {
+                    input.required = !isFileSelected;
+                }
+            });
+        });
+    </script>
+{% endif %}
+{% endblock %}
