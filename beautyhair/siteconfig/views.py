@@ -1,13 +1,12 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
-
 from .models import SiteConfig
 from .forms import SiteConfigForm
 import json
 
 
-json_to_model_field_mapping = {
+json_to_model_fields_mapping = {
     'type': 'gcal_type',
     'project_id': 'gcal_project_id',
     'private_key_id': 'gcal_private_key_id',
@@ -49,25 +48,32 @@ def view_config(request):
 def create_config(request):
     if SiteConfig.objects.exists():
         return redirect('siteconfig:update_config')
+
     if request.method == 'POST':
-        form = SiteConfigForm(request.POST, request.FILES)
+        post_data = request.POST.copy()
+        files_data = request.FILES.copy()
 
         if 'json_file' in request.FILES:
             json_file = request.FILES['json_file']
             data = json.load(json_file)
 
-            print("Загруженные данные из файла:", data)
+            # Отладка данных из JSON
+            print("Загруженные данные из файла JSON:", data)
 
-            initial_data = {}
-            for json_field, model_field in json_to_model_field_mapping.items():
+            # Обновление данных формы данными из JSON
+            for json_field, model_field in json_to_model_fields_mapping.items():
                 if json_field in data:
-                    initial_data[model_field] = data[json_field]
+                    post_data[model_field] = data[json_field]
 
-            form = SiteConfigForm(initial=initial_data)
+        form = SiteConfigForm(post_data, files_data)
+
+        # Отладка данных из формы
+        print("Значения формы main_* перед валидацией:")
+        for field in ['main_begin_time', 'main_end_time', 'main_shop_name', 'main_color_scheme']:
+            print(f"{field}: {post_data.get(field)}")
 
         if form.is_valid():
             form.save()
-            print("Форма сохранена успешно.")
             return redirect('siteconfig:view_config')
         else:
             print("Ошибки валидации формы:", form.errors)

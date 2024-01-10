@@ -1,128 +1,237 @@
 {% extends 'layout.html' %}
 
+{% load static %}
+
 {% block content %}
-<h2 class="title is-3">{{ title }}</h2>
+    <h2 class="title is-3">{{ title }}</h2>
 
-<form method="post" class="form" enctype="multipart/form-data" id="configForm">
-    {% csrf_token %}
+    <form method="post" class="form" enctype="multipart/form-data" id="config_form">
+        {% csrf_token %}
 
-    <div class="notification">
-        <p>Instead of manually entering values for all calendar fields, you can upload a JSON from Google:</p>
-    </div>
+    <article class="message is-danger">
+        <div class="message-body">
+            <p>Внимание: <strong><em>все</em></strong> поля в этой форме обязательны и должны быть заполнены.</p>
+            <p>Чтобы не заполнять поля с параметрами Google Calendar вручную, можно загрузить JSON файл с параметрами service account:</p>
 
-    <div class="file">
-      <label class="file-label">
-        <input class="file-input" type="file" name="json_file" id="json_file_input">
-        <span class="file-cta">
-          <span class="file-icon">
-            <i class="fas fa-upload"></i>
-          </span>
-          <span class="file-label">
-            Choose a file…
-          </span>
-        </span>
-      </label>
-    </div>
+            <div class="file is-info">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="json_file" id="json_file_input">
+                    <span class="file-cta">
+                        <span class="file-label">Load json file</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </article>
 
-
-<!--    <div class="file">-->
-<!--        <label class="file-label">-->
-<!--            <input class="file-input file-icon" type="file" name="json_file" id="json_file_input">-->
+<!--        <div class="file">-->
+<!--          <label class="file-label">-->
+<!--            <input class="file-input" type="file" name="json_file" id="json_file_input">-->
 <!--            <span class="file-cta">-->
-<!--                <span class="file-label">Google JSON file</span>-->
+<!--              <span class="file-icon">-->
+<!--                <i class="fas fa-upload"></i>-->
+<!--              </span>-->
+<!--              <span class="file-label">-->
+<!--                Choose a file…-->
+<!--              </span>-->
 <!--            </span>-->
-<!--        </label>-->
-<!--    </div>-->
+<!--          </label>-->
+<!--        </div>-->
 
-    <hr />
+        <hr />
 
-    <div class="box">
-        <h3 class="title is-4">Google Calendar Settings</h3>
-        <div class="field">
-            {{ form.gcal_type.label_tag }} {{ form.gcal_type }}
+        <div class="box">
+            <h3 class="title is-4">Google Calendar Settings</h3>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_type.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_type }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_project_id.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_project_id }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_private_key_id.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_private_key_id }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_private_key.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_private_key }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_client_email.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_client_email }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_client_id.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_client_id }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_auth_uri.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_auth_uri }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_token_uri.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_token_uri }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_auth_provider_x509_cert_url.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_auth_provider_x509_cert_url }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_client_x509_cert_url.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_client_x509_cert_url }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_universe_domain.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_universe_domain }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.gcal_scopes.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.gcal_scopes }}
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="field">
-            {{ form.gcal_project_id.label_tag }} {{ form.gcal_project_id }}
+        <hr />
+
+        <div class="box">
+            <h3 class="title is-4">Main Settings</h3>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.main_shop_name.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.main_shop_name }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.main_color_scheme.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.main_color_scheme }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.main_begin_time.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.main_begin_time }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.main_end_time.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        {{ form.main_end_time }}
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="field">
-            {{ form.gcal_private_key_id.label_tag }} {{ form.gcal_private_key_id }}
-        </div>
+        <button type="submit" class="button is-primary">Save</button>
+    </form>
+{% endblock %}
 
-        <div class="field">
-            {{ form.gcal_private_key.label_tag }} {{ form.gcal_private_key }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_client_email.label_tag }} {{ form.gcal_client_email }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_client_id.label_tag }} {{ form.gcal_client_id }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_auth_uri.label_tag }} {{ form.gcal_auth_uri }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_token_uri.label_tag }} {{ form.gcal_token_uri }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_auth_provider_x509_cert_url.label_tag }} {{ form.gcal_auth_provider_x509_cert_url }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_client_x509_cert_url.label_tag }} {{ form.gcal_client_x509_cert_url }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_universe_domain.label_tag }} {{ form.gcal_universe_domain }}
-        </div>
-
-        <div class="field">
-            {{ form.gcal_scopes.label_tag }} {{ form.gcal_scopes }}
-        </div>
-    </div>
-
-    <hr />
-
-    <div class="box">
-        <h3 class="title is-4">Main Settings</h3>
-        <div class="field">
-            {{ form.main_shop_name.label_tag }} {{ form.main_shop_name }}
-        </div>
-
-        <div class="field">
-            {{ form.main_color_scheme.label_tag }} {{ form.main_color_scheme }}
-        </div>
-
-        <div class="field">
-            {{ form.main_begin_time.label_tag }} {{ form.main_begin_time }}
-        </div>
-
-        <div class="field">
-            {{ form.main_end_time.label_tag }} {{ form.main_end_time }}
-        </div>
-    </div>
-
-    <button type="submit" class="button is-primary">Save</button>
-</form>
-
-{% if include_js %}
-    <script>
-        document.getElementById('json_file_input').addEventListener('change', function() {
-            let form = document.getElementById('configForm');
-            let isFileSelected = !!this.files.length;
-
-            Array.from(form_config.elements).forEach(function(input) {
-                if (input.name.startsWith('gcal_')) {
-                    input.required = !isFileSelected;
-                }
-            });
-        });
-    </script>
-{% endif %}
+{% block javascript %}
+    {% if include_js %}
+        <script src="{% static 'js/change_required_fields.js' %}"></script>
+    {% endif %}
 {% endblock %}
