@@ -14,8 +14,8 @@ class SiteConfigForm(forms.ModelForm):
         model = SiteConfig
         fields = '__all__'
         widgets = {
-            'main_begin_time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
-            'main_end_time': forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'),
+            'main_begin_time': forms.Select(attrs={'type': 'time'}),
+            'main_end_time': forms.TimeInput(attrs={'type': 'time'}),
             'main_color_scheme': forms.Select(),
         }
         labels = {
@@ -32,27 +32,17 @@ class SiteConfigForm(forms.ModelForm):
             'gcal_universe_domain': 'Universe Domain',
             'gcal_scopes': 'Scopes',
             'main_shop_name': 'Shop name',
-            'main_color_scheme': 'Color ncheme',
+            'main_color_scheme': 'Color scheme',
             'main_begin_time': 'Begin worktime',
             'main_end_time': 'End worktime',
         }
 
     def __init__(self, *args, **kwargs):
         super(SiteConfigForm, self).__init__(*args, **kwargs)
-        self.initial['main_begin_time'] = '00:00'
-        self.initial['main_end_time'] = '00:00'
-        self.fields['main_shop_name'].required = False
-        self.fields['main_color_scheme'].required = False
-        self.fields['main_begin_time'].required = False
-        self.fields['main_end_time'].required = False
-
-    def clean(self):
-        cleaned_data = super().clean()
-        json_file = cleaned_data.get('json_file')
-
-        # Пропуск валидации полей, если загружен файл
-        if json_file:
-            for field_name in self.fields:
-                if field_name.startswith('gcal_'):
-                    self.fields[field_name].required = False
-        return cleaned_data
+        self.fields['main_shop_name'].required = True
+        # self.initial['main_shop_name'] = ''
+        self.fields['main_color_scheme'].required = True
+        self.fields['main_begin_time'].required = True
+        self.fields['main_end_time'].required = True
+        self.fields['main_begin_time'].widget = forms.TimeInput(attrs={'type': 'time', 'value': '00:00'}, format='%H:%M')
+        self.fields['main_end_time'].widget = forms.TimeInput(attrs={'type': 'time', 'value': '00:00'}, format='%H:%M')

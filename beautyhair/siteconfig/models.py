@@ -14,10 +14,10 @@ class SiteConfig(models.Model):
     gcal_client_x509_cert_url = models.URLField(null=False, blank=False)
     gcal_universe_domain = models.CharField(max_length=128, null=False, blank=False)
     gcal_scopes = models.URLField(null=False, blank=False)
-    main_shop_name = models.CharField(max_length=128, null=False, blank=True)
-    main_color_scheme = models.CharField(max_length=128, null=False, blank=True)
-    main_begin_time = models.TimeField(null=False, blank=True)
-    main_end_time = models.TimeField(null=False, blank=True)
+    main_shop_name = models.CharField(max_length=128, null=False, blank=False)
+    main_color_scheme = models.CharField(max_length=128, null=False, blank=False)
+    main_begin_time = models.TimeField(null=False, blank=False)
+    main_end_time = models.TimeField(null=False, blank=False)
 
     class Meta:
         db_table = 'siteconfig'
