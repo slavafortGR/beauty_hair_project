@@ -3,3 +3,4 @@ Django==5.0
 sqlparse==0.4.4
 typing_extensions==4.9.0
 django-extensions==3.2.3
+django-seed==0.3.1
