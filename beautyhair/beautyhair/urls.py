@@ -27,4 +27,5 @@ urlpatterns = [
     path('store/', include('store.urls')),
     path('categories/', include('categories.urls')),
     path('reports/', include('reports.urls')),
+    path('config/', include('siteconfig.urls')),
 ]

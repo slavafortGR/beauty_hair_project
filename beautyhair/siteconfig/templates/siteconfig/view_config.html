@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block content %}
+<h3 class="title is-3">Site Configuration</h3>
+
+{% if warning_message %}
+    <div class="notification is-danger">
+        {{ warning_message }}
+    </div>
+{% endif %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="notification is-{{ message.tags }}">
+            <button class="delete"></button>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if show_json_upload %}
+    <form action="{% url 'siteconfig:upload_json' %}" method="post" enctype="multipart/form-data" class="is-flex">
+        {% csrf_token %}
+        <div class="field">
+            <div class="file control">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="json_file" required>
+                    <span class="file-cta">
+                        <span class="file-label">Choose a JSON file</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-link">Upload</button>
+        </div>
+    </form>
+{% endif %}
+
+
+{% if config %}
+    <div>
+        <a class="button is-link" href="{% url 'siteconfig:update_config' %}">Edit</a>
+    </div>
+{% else %}
+    <div>
+        <a class="button is-link" href="{% url 'siteconfig:create_config' %}">Create</a>
+    </div>
+{% endif %}
+
+
+<hr />
+
+<div>
+    <p>Project ID: {{ config.gcal_project_id }}</p>
+    <p>Client Email: {{ config.gcal_client_email }}</p>
+    <p>Client ID: {{ config.gcal_client_id }}</p>
+    <!-- Другие поля конфигурации -->
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/close_notification.js' %}"></script>
+{% endblock %}

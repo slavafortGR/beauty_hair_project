@@ -1,0 +1,337 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h3 class="title is-3">{{ title }}</h3>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification is-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="form" enctype="multipart/form-data" id="config_form">
+        {% csrf_token %}
+
+        <article class="message is-danger">
+            <div class="message-body">
+                <p>Внимание: <strong><em>все</em></strong> поля в этой форме обязательны и должны быть заполнены.</p>
+                <p>Чтобы не заполнять поля с параметрами Google Calendar вручную, можно загрузить JSON файл с параметрами service account:</p>
+
+                <div class="file is-info">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="json_file" id="json_file_input">
+                        <span class="file-cta">
+                            <span class="file-label">Load json file</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="box">
+            <h3 class="title is-4">Google Calendar Settings</h3>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_type.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <!-- Этот монстроподобный input, конечно, работает, но способ оооочень черезжопный. -->
+                                    <!-- По-хорошему, надо бы переделать через определение классов элементов -->
+                                    <!-- в forms.py. -->
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_type.name }}" id="{{ form.gcal_type.id_for_label }}" value="{{ form.gcal_type.value }}">
+                                    <!-- {{ form.gcal_type }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_project_id.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_project_id.name }}" id="{{ form.gcal_project_id.id_for_label }}" value="{{ form.gcal_project_id.value }}">
+                                    <!-- {{ form.gcal_project_id }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_private_key_id.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_private_key_id.name }}" id="{{ form.gcal_private_key_id.id_for_label }}" value="{{ form.gcal_private_key_id.value }}">
+                                    <!-- {{ form.gcal_private_key_id }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_private_key.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <textarea class="textarea is-fullwidth" name="{{ form.gcal_private_key.name }}" id="{{ form.gcal_private_key.id_for_label }}">{{ form.gcal_private_key.value }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_client_email.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_client_email.name }}" id="{{ form.gcal_client_email.id_for_label }}" value="{{ form.gcal_client_email.value }}">
+                                    <!-- {{ form.gcal_client_email }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_client_id.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_client_id.name }}" id="{{ form.gcal_client_id.id_for_label }}" value="{{ form.gcal_client_id.value }}">
+                                    <!-- {{ form.gcal_client_id }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_auth_uri.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_auth_uri.name }}" id="{{ form.gcal_auth_uri.id_for_label }}" value="{{ form.gcal_auth_uri.value }}">
+                                    <!-- {{ form.gcal_auth_uri }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_token_uri.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_token_uri.name }}" id="{{ form.gcal_token_uri.id_for_label }}" value="{{ form.gcal_token_uri.value }}">
+                                    <!-- {{ form.gcal_token_uri }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_auth_provider_x509_cert_url.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_auth_provider_x509_cert_url.name }}" id="{{ form.gcal_auth_provider_x509_cert_url.id_for_label }}" value="{{ form.gcal_auth_provider_x509_cert_url.value }}">
+                                    <!-- {{ form.gcal_auth_provider_x509_cert_url }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_client_x509_cert_url.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_client_x509_cert_url.name }}" id="{{ form.gcal_client_x509_cert_url.id_for_label }}" value="{{ form.gcal_client_x509_cert_url.value }}">
+                                    <!-- {{ form.gcal_client_x509_cert_url }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_universe_domain.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_universe_domain.name }}" id="{{ form.gcal_universe_domain.id_for_label }}" value="{{ form.gcal_universe_domain.value }}">
+                                    <!-- {{ form.gcal_universe_domain }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.gcal_scopes.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.gcal_scopes.name }}" id="{{ form.gcal_scopes.id_for_label }}" value="{{ form.gcal_scopes.value }}">
+                                    <!-- {{ form.gcal_scopes }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="box">
+            <h3 class="title is-4">Main Settings</h3>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.main_shop_name.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="text" name="{{ form.main_shop_name.name }}" id="{{ form.main_shop_name.id_for_label }}" value="{{ form.main_shop_name.value }}">
+                                    <!-- {{ form.main_shop_name }} -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="label field-label is-normal">
+                    {{ form.main_color_scheme.label_tag }}
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control is-expanded">
+                            <div class="select is-fullwidth">
+                                {{ form.main_color_scheme }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.main_begin_time.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="time" name="{{ form.main_begin_time.name }}" id="{{ form.main_begin_time.id_for_label }}" value="{{ form.main_begin_time.value|date:'H:i' }}">
+                                    <!-- {{ form.main_begin_time }}-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-full">
+                    <div class="field is-horizontal">
+                        <div class="label field-label is-normal">
+                            {{ form.main_end_time.label_tag }}
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-fullwidth" type="time" name="{{ form.main_end_time.name }}" id="{{ form.main_end_time.id_for_label }}" value="{{ form.main_end_time.value|date:'H:i' }}">
+                                    <!-- {{ form.main_end_time }}-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="button is-primary">Save</button>
+    </form>
+{% endblock %}
