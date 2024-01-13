@@ -2,10 +2,23 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
-    <form action="{% url 'get_clients' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Сохранить</button>
-    </form>
+
+    {% for clients in all_clients %}
+        <ul>
+            <li>
+                <span><strong>first_name:</strong> {{ clients.first_name }}</span>
+            </li>
+
+            <li>
+                <span><strong>last_name:</strong> {{ clients.last_name }}</span>
+            </li>
+
+            <li>
+                <span><strong>gender:</strong> {{ clients.gender }}</span>
+            </li>
+        </ul>
+    {% endfor %}
+
+        <a href="{% url 'add_client' %}">Add client</a>
 
 {% endblock %}

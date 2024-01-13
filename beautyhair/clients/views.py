@@ -4,7 +4,7 @@ from clients.forms import AddClient
 from clients.models import Client
 
 
-def get_clients(request):
+def add_client(request):
     if request.method == 'POST':
         form = AddClient(request.POST)
         if form.is_valid():
@@ -13,6 +13,13 @@ def get_clients(request):
                 return redirect('get_clients')
             except:
                 form.add_error('', 'Error')
+                print(form.cleaned_data)
     else:
         form = AddClient()
-    return render(request, 'clients/get_clients.html', {'form': form, 'title': 'Создать клиента'})
+    return render(request, 'clients/add_client.html', {'form': form, 'title': 'Создать клиента'})
+
+
+def get_clients(request):
+    all_clients = Client.objects.all()
+    context = {'all_clients': all_clients}
+    return render(request, 'clients/get_clients.html', context, {'title': 'Клиенты'})
