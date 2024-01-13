@@ -6,19 +6,17 @@
     {% for clients in all_clients %}
         <ul>
             <li>
-                <span><strong>first_name:</strong> {{ clients.first_name }}</span>
+                <span><strong>Имя:</strong> {{ clients.first_name }}</span>
             </li>
 
             <li>
-                <span><strong>last_name:</strong> {{ clients.last_name }}</span>
+                <span><strong>Фамилия:</strong> {{ clients.last_name }}</span>
             </li>
 
             <li>
-                <span><strong>gender:</strong> {{ clients.gender }}</span>
+                <span><strong>Пол:</strong> {{ clients.gender }}</span>
             </li>
         </ul>
     {% endfor %}
-
-        <a href="{% url 'add_client' %}">Add client</a>
 
 {% endblock %}

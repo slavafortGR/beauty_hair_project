@@ -13,7 +13,6 @@ def add_client(request):
                 return redirect('get_clients')
             except:
                 form.add_error('', 'Error')
-                print(form.cleaned_data)
     else:
         form = AddClient()
     return render(request, 'clients/add_client.html', {'form': form, 'title': 'Создать клиента'})
