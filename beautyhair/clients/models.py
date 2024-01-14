@@ -2,13 +2,22 @@ from django.db import models
 
 
 class Client(models.Model):
+    GENDER = {
+        'm': 'Male',
+        'f': 'Female',
+        'u': 'Undefined'
+    }
+
     first_name = models.CharField(max_length=45, null=False, blank=False)
     last_name = models.CharField(max_length=45, null=False, blank=False)
-    gender = models.CharField(max_length=1)
+    gender = models.CharField(max_length=1, choices=GENDER)
     registration_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'clients'
+
+    def gender_display(self):
+        return dict(Client.GENDER)[self.gender]
 
 
 class Contact(models.Model):

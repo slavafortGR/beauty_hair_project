@@ -5,7 +5,7 @@
     "fields": {
       "first_name": "Slava",
       "last_name": "Kalmykov",
-      "gender": "M",
+      "gender": "m",
       "registration_date": "2024-01-09T16:34:56Z"
     }
   },
@@ -25,7 +25,7 @@
     "fields": {
       "first_name": "Alina",
       "last_name": "Simakova",
-      "gender": "F",
+      "gender": "f",
       "registration_date": "2024-01-09T16:35:46Z"
     }
   },

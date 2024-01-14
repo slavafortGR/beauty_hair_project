@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'clients/partials/actions.html' %}
+
+    <h1>{{ title }}</h1>
+
+    {% if clients %}
+        {% for client in clients %}
+            <ul>
+                <li>
+                    <span><strong>Имя:</strong> {{ client.first_name }}</span>
+                </li>
+
+                <li>
+                    <span><strong>Фамилия:</strong> {{ client.last_name }}</span>
+                </li>
+
+                <li>
+                    <span><strong>Пол:</strong> {{ client.get_gender_display }}</span>
+                </li>
+            </ul>
+
+            <hr />
+        {% endfor %}
+    {% else %}
+        <p>Пока пусто =)</p>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'clients/partials/actions.html' %}
+
+    <h1>{{ title }}</h1>
+
+    <h1>Client Detail</h1>
+    <p>First Name: {{ client.first_name }}</p>
+    <p>Last Name: {{ client.last_name }}</p>
+    <p>Gender: {{ client.gender_display }}</p>
+    <p>Registration Date: {{ client.registration_date|date:"d.m.Y" }}</p>
+
+{% endblock %}
