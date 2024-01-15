@@ -1,5 +1,7 @@
 from django import forms
-from .models import Client
+from django.forms import inlineformset_factory
+
+from .models import Client, Contact
 
 
 class AddClientForm(forms.ModelForm):
@@ -9,3 +11,16 @@ class AddClientForm(forms.ModelForm):
         widgets = {
             'gender': forms.Select()
         }
+
+
+class AddContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = ['value', 'kind', 'primary']
+        widgets = {
+            'value': forms.TextInput(),
+            'kind': forms.Select(),
+            'ptimary': forms.CheckboxInput(),
+        }
+
+ContactFormSet = inlineformset_factory(Client, Contact, form=AddContactForm, extra=1, can_delete=False)
