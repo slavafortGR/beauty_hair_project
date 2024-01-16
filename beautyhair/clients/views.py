@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from clients.forms import AddClientForm
-from clients.models import Client
+from clients.forms import AddClientForm, ContactFormSet
+from clients.models import Client, Contact
 
 
 def new_client(request):
@@ -13,6 +13,7 @@ def new_client(request):
                 last_name=form.cleaned_data['last_name'],
                 gender=form.cleaned_data['gender']
             )
+
             return redirect('view_client', pk=client.pk)
         else:
             return HttpResponse("Invalid data", status=400)
@@ -24,8 +25,10 @@ def new_client(request):
 
 def clients(request):
     all_clients = Client.objects.all()
+    all_contacts = Contact.objects.all()
     context = {
         'clients': all_clients,
+        'contacts': all_contacts,
         'title': 'Клиенты'
     }
     return render(request, 'clients/clients.html', context)

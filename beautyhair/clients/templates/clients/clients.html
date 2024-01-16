@@ -23,7 +23,19 @@
             </ul>
 
             <hr />
+            <ul>
+                {% for contact in contacts %}
+                    {% if contact.owner == client %}
+                        <li>
+                            <span><strong>Контакт:</strong> {{ contact.value }}</span><br>
+                            <span><strong>Тип:</strong> {{ contact.get_kind_display }}</span><br>
+                            <span><strong>Основной контакт:</strong> {{ contact.primary }}</span><br>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         {% endfor %}
+
     {% else %}
         <p>Пока пусто =)</p>
     {% endif %}

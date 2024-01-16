@@ -20,7 +20,7 @@ class AddContactForm(forms.ModelForm):
         widgets = {
             'value': forms.TextInput(),
             'kind': forms.Select(),
-            'ptimary': forms.CheckboxInput(),
+            'primary': forms.CheckboxInput(),
         }
 
 ContactFormSet = inlineformset_factory(Client, Contact, form=AddContactForm, extra=1, can_delete=False)
