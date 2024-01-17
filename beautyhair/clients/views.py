@@ -1,26 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from clients.forms import AddClientForm, ContactFormSet
+from clients.forms import AddClientForm, ContactFormSet, AddContactForm
 from clients.models import Client, Contact
 
 
 def new_client(request):
     if request.method == 'POST':
         form = AddClientForm(request.POST)
-        if form.is_valid():
+        contact_formset = AddContactForm(request.POST, instance=Client())
+        if form.is_valid() and contact_formset.is_valid():
             client = Client.objects.create(
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name'],
                 gender=form.cleaned_data['gender']
             )
 
+            contact = contact_formset.save(commit=True)
+            contact.client = client
+            contact.save()
+
             return redirect('view_client', pk=client.pk)
         else:
             return HttpResponse("Invalid data", status=400)
     else:
         form = AddClientForm()
+        contact_formset = ContactFormSet(instance=Client())
 
-    return render(request, 'clients/new_client.html', {'form': form})
+    return render(request, 'clients/new_client.html', {'form': form, 'contact_formset': contact_formset})
 
 
 def clients(request):
