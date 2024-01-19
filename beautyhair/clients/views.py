@@ -43,4 +43,9 @@ def clients(request):
 def view_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
     contact = get_object_or_404(Contact, pk=pk)
-    return render(request, 'clients/view_client.html', {'client': client, 'contact':contact})
+    context = {
+        'client_info': client,
+        'contact_info': contact,
+        'title':'Клиент'
+    }
+    return render(request, 'clients/view_client.html', context)

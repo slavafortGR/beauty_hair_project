@@ -5,13 +5,40 @@
 {% include 'clients/partials/actions.html' %}
 
     <h1>{{ title }}</h1>
+    <hr/>
 
-    <h1>Client Detail</h1>
-<p><strong>First Name:</strong> {{ client.first_name }}</p>
-<p><strong>Last Name:</strong> {{ client.last_name }}</p>
-<p><strong>Gender:</strong> {{ client.gender }}</p>
-<p><strong>Registration Date:</strong> {{ client.registration_date|date:"d.m.Y" }}</p>
-<p><strong>Contact:</strong> {{ contact.value }}</p>
-<p><strong>Kind:</strong> {{ contact.get_kind_display }}</p>
-<p><strong>Primary:</strong> {{contact.primary|yesno:"Yes,No"}}</p>
+        {% if client_info %}
+            <ul>
+                <li>
+                    <span>Имя: {{ client_info.first_name }}</span>
+                </li>
+
+                <li>
+                    <span>Фамилия: {{ client_info.last_name }}</span>
+                </li>
+
+                <li>
+                    <span>Пол: {{ client_info.gender }}</span>
+                </li>
+
+                <li>
+                    <span>Дата регистрации: {{ client_info.registration_date|date:"d.m.Y" }}</span>
+                </li>
+
+                <li>
+                    <span>Контакт: {{ contact_info.value }}</span>
+                </li>
+
+                <li>
+                    <span>Тип: {{ contact_info.get_kind_display }}</span>
+                </li>
+
+                <li>
+                    <span>Основной контакт: {{ contact_info.primary|yesno:"Yes,No" }}</span>
+                </li>
+            </ul>
+        {% else %}
+            <p>Pass</p>
+        {% endif %}
+
 {% endblock %}
