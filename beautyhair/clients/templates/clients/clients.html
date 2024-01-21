@@ -4,40 +4,43 @@
 
 {% include 'clients/partials/actions.html' %}
 
-    <h1>{{ title }}</h1>
+<h1>{{ title }}</h1>
 
-    {% if clients %}
-        {% for client in clients %}
-            <ul>
-                <li>
-                    <span><strong>Имя:</strong> {{ client.first_name }}</span>
-                </li>
+{% if clients %}
+{% for client in clients %}
+<ul>
+    <li>
+        <span><strong>Имя:</strong> {{ client.first_name }}</span>
+    </li>
 
-                <li>
-                    <span><strong>Фамилия:</strong> {{ client.last_name }}</span>
-                </li>
+    <li>
+        <span><strong>Фамилия:</strong> {{ client.last_name }}</span>
+    </li>
 
-                <li>
-                    <span><strong>Пол:</strong> {{ client.get_gender_display }}</span>
-                </li>
-            </ul>
+    <li>
+        <span><strong>Пол:</strong> {{ client.get_gender_display }}</span>
+    </li>
+</ul>
 
-            <hr />
-            <ul>
-                {% for contact in contacts %}
-                    {% if contact.owner == client %}
-                        <li>
-                            <span><strong>Контакт:</strong> {{ contact.value }}</span><br>
-                            <span><strong>Тип:</strong> {{ contact.get_kind_display }}</span><br>
-                            <span><strong>Основной контакт:</strong> {{ contact.primary|yesno:"Yes,No" }}</span><br>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
+<a href="{% url 'view_client' client.pk %}" class="menu-item">О клиенте</a>
 
-    {% else %}
-        <p>Пока пусто =)</p>
+<hr/>
+<ul>
+    {% for contact in contacts %}
+    {% if contact.owner == client %}
+    <li>
+        <span><strong>Контакт:</strong> {{ contact.value }}</span><br>
+        <span><strong>Тип:</strong> {{ contact.get_kind_display }}</span><br>
+        <span><strong>Основной контакт:</strong> {{ contact.primary|yesno:"Yes,No" }}</span><br>
+    </li>
     {% endif %}
+    {% endfor %}
+</ul>
+
+{% endfor %}
+
+{% else %}
+<p>Пока пусто =)</p>
+{% endif %}
 
 {% endblock %}

@@ -47,7 +47,7 @@ def view_client(request, pk):
     context = {
         'client_info': client,
         'contact_info': contact,
-        'title':'Клиент'
+        'title': 'Клиент'
     }
     return render(request, 'clients/view_client.html', context)
 
@@ -57,19 +57,21 @@ def edit_client(request, pk):
     contact = get_object_or_404(Contact, pk=pk)
 
     if request.method == 'POST':
-        form =
+        form = AddClientForm(request.POST, instance=client)
+        contact_form = AddContactForm(request.POST, instance=contact)
 
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid() and contact_form.is_valid():
             form.save()
-            formset.save()
+            contact_form.save()
+            return redirect('clients')
 
-        else:
-            form = AddClientForm(instance=client)
-            formset = ContactFormSet(instance=client)
+    else:
+        form = AddClientForm(instance=client)
+        contact_form = ContactFormSet(instance=client)
 
         context = {
             'form': form,
-            'formset': formset,
+            'contact_form': contact_form,
             'pk': pk,
         }
         return render(request, 'new_client.html', context)
