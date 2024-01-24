@@ -1,4 +1,3 @@
-from django.forms import inlineformset_factory
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from clients.forms import AddClientForm, ContactFormSet, AddContactForm
@@ -54,24 +53,25 @@ def view_client(request, pk):
 
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = get_object_or_404(Contact, client_id=pk)
 
     if request.method == 'POST':
         form = AddClientForm(request.POST, instance=client)
-        contact_form = AddContactForm(request.POST, instance=contact)
+        contact_formset = AddContactForm(request.POST, instance=client)
 
-        if form.is_valid() and contact_form.is_valid():
+        if form.is_valid() and contact_formset.is_valid():
             form.save()
-            contact_form.save()
-            return redirect('clients')
+            contact_formset.save()
+            return redirect('view_client', pk=client.pk)
 
     else:
         form = AddClientForm(instance=client)
-        contact_form = ContactFormSet(instance=client)
+        contact_formset = ContactFormSet(instance=client)
 
         context = {
             'form': form,
-            'contact_form': contact_form,
+            'contact_form': contact_formset,
             'pk': pk,
+            'title': 'Клиент'
         }
-        return render(request, 'new_client.html', context)
+        return render(request, 'edit_client.html', context)

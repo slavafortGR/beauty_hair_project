@@ -5,5 +5,5 @@ urlpatterns = [
     path('', clients, name='clients'),
     path('<int:pk>', view_client, name='view_client'),
     path('new/', new_client, name='new_client'),
-    path('edit/<int:pk>', edit_client, name='edit_client')
+    path('clients/edit/<int:pk>', edit_client, name='edit_client')
 ]
