@@ -53,25 +53,11 @@ def view_client(request, pk):
 
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = get_object_or_404(Contact, client_id=pk)
+    contact = get_object_or_404(Contact, pk=pk)
 
-    if request.method == 'POST':
-        form = AddClientForm(request.POST, instance=client)
-        contact_formset = AddContactForm(request.POST, instance=client)
-
-        if form.is_valid() and contact_formset.is_valid():
-            form.save()
-            contact_formset.save()
-            return redirect('view_client', pk=client.pk)
-
-    else:
-        form = AddClientForm(instance=client)
-        contact_formset = ContactFormSet(instance=client)
-
+    if request.method == 'GET':
         context = {
-            'form': form,
-            'contact_form': contact_formset,
-            'pk': pk,
-            'title': 'Клиент'
+            'form': AddClientForm(instance=client), 'pk': pk,
+            'contact_formset': AddContactForm(instance=contact)
         }
-        return render(request, 'edit_client.html', context)
+        return render(request, 'clients/new_client.html', context)
