@@ -61,3 +61,15 @@ def edit_client(request, pk):
             'contact_formset': AddContactForm(instance=contact)
         }
         return render(request, 'clients/new_client.html', context)
+
+    elif request.method == 'POST':
+        form = AddClientForm(request.POST, instance=client)
+        contact_formset = AddContactForm(request.POST, instance=contact)
+
+        if form.is_valid() and contact_formset.is_valid():
+            form.save()
+            contact_formset.save()
+
+            return redirect(request, 'clients/view_client.html')
+
+    return render(request, 'clients/new_client.html')
