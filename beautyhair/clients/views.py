@@ -15,7 +15,7 @@ def new_client(request):
                 gender=form.cleaned_data['gender']
             )
 
-            contact = contact_formset.save(commit=True)
+            contact = contact_formset.save(commit=False)
             contact.client = client
             contact.save()
 
@@ -70,6 +70,21 @@ def edit_client(request, pk):
             form.save()
             contact_formset.save()
 
-            return redirect(request, 'clients/view_client.html')
+            return render(request, 'clients/clients.html')
 
     return render(request, 'clients/new_client.html')
+
+def delete_client(request, pk):
+    client = Client.objects.get(pk=pk)
+    client.delete()
+    return redirect('/clients/')
+
+# def delete_client(request, pk):
+#     client = Client.objects.get(pk=pk)
+#
+#     if request.method == 'POST':
+#         client.delete()
+#
+#         return redirect('clients')
+#
+#     return render(request, 'delete_client.html')
