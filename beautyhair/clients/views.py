@@ -7,7 +7,7 @@ from clients.models import Client, Contact
 def new_client(request):
     if request.method == 'POST':
         form = AddClientForm(request.POST)
-        contact_formset = AddContactForm(request.POST, instance=Client())
+        contact_formset = ContactFormSet(request.POST, instance=Client())
         if form.is_valid() and contact_formset.is_valid():
             client = Client.objects.create(
                 first_name=form.cleaned_data['first_name'],
@@ -15,9 +15,8 @@ def new_client(request):
                 gender=form.cleaned_data['gender']
             )
 
-            contact = contact_formset.save(commit=False)
-            contact.client = client
-            contact.save()
+            contact_formset.instance = client
+            contact_formset.save()
 
             return redirect('view_client', pk=client.pk)
         else:
@@ -42,7 +41,7 @@ def clients(request):
 
 def view_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = Contact.objects.filter(owner=client)
     context = {
         'client_info': client,
         'contact_info': contact,
