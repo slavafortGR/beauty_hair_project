@@ -6,6 +6,7 @@
 
 <h1>{{ title }}</h1>
 
+<hr/>
 {% if clients %}
 {% for client in clients %}
 <ul>
@@ -22,11 +23,6 @@
     </li>
 </ul>
 
-<a href="{% url 'view_client' client.pk %}" class="menu-item">О клиенте</a>
-<br/>
-<a href="{% url 'delete_client' client.pk %}" class="menu-item">Удалить</a>
-
-<hr/>
 <ul>
     {% for contact in contacts %}
     {% if contact.owner == client %}
@@ -36,8 +32,13 @@
         <span><strong>Основной контакт:</strong> {{ contact.primary|yesno:"Yes,No" }}</span><br>
     </li>
     {% endif %}
+
     {% endfor %}
 </ul>
+<a href="{% url 'view_client' client.pk %}" class="menu-item">О клиенте</a>
+<br/>
+<a href="{% url 'delete_client' client.pk %}" class="menu-item">Удалить</a>
+<hr/>
 
 {% endfor %}
 

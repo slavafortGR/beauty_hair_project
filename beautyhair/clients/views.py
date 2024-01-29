@@ -41,7 +41,7 @@ def clients(request):
 
 def view_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = Contact.objects.filter(owner=client)
+    contact = Contact.objects.get(owner=pk)
     context = {
         'client_info': client,
         'contact_info': contact,
@@ -52,7 +52,7 @@ def view_client(request, pk):
 
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = get_object_or_404(Contact, pk=pk)
+    contact = Contact.objects.get(owner=pk)
 
     if request.method == 'GET':
         context = {
@@ -69,21 +69,12 @@ def edit_client(request, pk):
             form.save()
             contact_formset.save()
 
-            return render(request, 'clients/clients.html')
+            return redirect('clients')
 
     return render(request, 'clients/new_client.html')
+
 
 def delete_client(request, pk):
     client = Client.objects.get(pk=pk)
     client.delete()
-    return redirect('/clients/')
-
-# def delete_client(request, pk):
-#     client = Client.objects.get(pk=pk)
-#
-#     if request.method == 'POST':
-#         client.delete()
-#
-#         return redirect('clients')
-#
-#     return render(request, 'delete_client.html')
+    return redirect('clients')
