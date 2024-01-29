@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if create_mode %}
+<h2>New client</h2>
+    <form action="{% url 'new_client' %}" method="post">
+{% else %}
+<h2>Edit client</h2>
+    <form action="{% url 'edit_client' pk=pk %}" method="post">
+{% endif %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ contact_formset.as_p }}
+        <button type="submit">Save</button>
+</form>
+{% endblock %}

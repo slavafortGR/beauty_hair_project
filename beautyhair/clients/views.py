@@ -25,7 +25,7 @@ def new_client(request):
         form = AddClientForm()
         contact_formset = ContactFormSet(instance=Client())
 
-    return render(request, 'clients/new_client.html', {'form': form, 'contact_formset': contact_formset})
+    return render(request, 'clients/client_form.html', {'form': form, 'contact_formset': contact_formset, 'pk': None, 'create_mode': True})
 
 
 def clients(request):
@@ -59,7 +59,7 @@ def edit_client(request, pk):
             'form': AddClientForm(instance=client), 'pk': pk,
             'contact_formset': AddContactForm(instance=contact)
         }
-        return render(request, 'clients/new_client.html', context)
+        return render(request, 'clients/client_form.html', context)
 
     elif request.method == 'POST':
         form = AddClientForm(request.POST, instance=client)
@@ -71,7 +71,7 @@ def edit_client(request, pk):
 
             return redirect('clients')
 
-    return render(request, 'clients/new_client.html')
+    return render(request, 'clients/client_form.html')
 
 
 def delete_client(request, pk):
