@@ -16,9 +16,9 @@ class AddClientForm(forms.ModelForm):
 class AddContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['value', 'kind', 'primary']
+        fields = ['contact', 'kind', 'primary']
         widgets = {
-            'value': forms.TextInput(),
+            'contact': forms.TextInput(),
             'kind': forms.Select(),
             'primary': forms.CheckboxInput(),
         }
