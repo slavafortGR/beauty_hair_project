@@ -10,15 +10,11 @@
 {% if client_info and contact_info %}
 <ul>
     <li>
-        <span>Имя: {{ client_info.first_name }}</span>
+        <span> {{ client_info.first_name }} {{ client_info.last_name }}</span>
     </li>
 
     <li>
-        <span>Фамилия: {{ client_info.last_name }}</span>
-    </li>
-
-    <li>
-        <span>Пол: {{ client_info.gender }}</span>
+        <span> {{ client_info.gender }}</span>
     </li>
 
     <li>

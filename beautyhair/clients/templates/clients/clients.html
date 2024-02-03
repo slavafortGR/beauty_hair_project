@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+
 {% include 'clients/partials/actions.html' %}
 
 <h1>{{ title }}</h1>
@@ -11,15 +13,11 @@
 {% for client in clients %}
 <ul>
     <li>
-        <span><strong>Имя:</strong> {{ client.first_name }}</span>
+        <span> {{ client.first_name }} {{ client.last_name }}</span>
     </li>
 
     <li>
-        <span><strong>Фамилия:</strong> {{ client.last_name }}</span>
-    </li>
-
-    <li>
-        <span><strong>Пол:</strong> {{ client.get_gender_display }}</span>
+        <span> {{ client.get_gender_display }}</span>
     </li>
 </ul>
 
