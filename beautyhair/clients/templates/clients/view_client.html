@@ -33,7 +33,8 @@
         <span>Основной контакт: {{ contact_info.primary|yesno:"Yes,No" }}</span>
     </li>
 
-    <a href="{% url 'edit_client' pk=client_info.pk %}" class="menu-item">Редактировать</a>
+    <a href="{% url 'edit_client' pk=client_info.pk %}" class="menu-item">Редактировать</a></br>
+    <a href="{% url 'add_contact' pk=client_info.pk %}" class="menu-item">Добавить контакт</a>
 </ul>
 
 {% else %}
