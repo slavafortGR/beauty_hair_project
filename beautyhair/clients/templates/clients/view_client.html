@@ -10,28 +10,22 @@
 {% if client_info and contact_info %}
 <ul>
     <li>
-        <span> {{ client_info.first_name }} {{ client_info.last_name }}</span>
-    </li>
-
-    <li>
-        <span> {{ client_info.gender }}</span>
+        <span>{{ client_info.first_name }} {{ client_info.last_name }}</span>
+        <span><strong>{{ client_info.gender }}</strong></span>
     </li>
 
     <li>
         <span>Дата регистрации: {{ client_info.registration_date|date:"d.m.Y" }}</span>
     </li>
 
-    <li>
-        <span>Контакт: {{ contact_info.contact }}</span>
-    </li>
-
-    <li>
-        <span>Тип: {{ contact_info.get_kind_display }}</span>
-    </li>
-
-    <li>
-        <span>Основной контакт: {{ contact_info.primary|yesno:"Yes,No" }}</span>
-    </li>
+    <ul>
+        {% for contact_item in contact_info %}
+        <li>
+            <span>Контакт: {% if contact_item.primary %}<strong>{{ contact_item.contact }}</strong>{% else %}{{ contact_item.contact }}{% endif %}</span>
+            <span>{{ contact_item.get_kind_display }}</span>
+        </li>
+        {% endfor %}
+    </ul>
 
     <a href="{% url 'edit_client' pk=client_info.pk %}" class="menu-item">Редактировать</a></br>
     <a href="{% url 'add_contact' pk=client_info.pk %}" class="menu-item">Добавить контакт</a>

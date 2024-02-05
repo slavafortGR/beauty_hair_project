@@ -42,7 +42,7 @@ def clients(request):
 
 def view_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = Contact.objects.get(owner=pk)
+    contact = Contact.objects.filter(owner=pk)
     context = {
         'client_info': client,
         'contact_info': contact,
@@ -53,7 +53,7 @@ def view_client(request, pk):
 
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    contact = Contact.objects.get(owner=pk)
+    contact = Contact.objects.filter(owner=pk)
 
     if request.method == 'GET':
         context = {
