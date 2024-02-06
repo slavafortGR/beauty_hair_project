@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include 'clients/partials/actions.html' %}
+
+<h1>{{ title }}</h1>
+
+<hr/>
+{% if clients %}
+{% for client in clients %}
+<ul>
+    <li>
+        <span>{{ client.first_name }} {{ client.last_name }}</span>
+        <span><strong>{{ client.get_gender_display }}</strong></span>
+    </li>
+</ul>
+
+<ul>
+    {% for contact in contacts %}
+    {% if contact.owner == client %}
+    <li>
+        <span>Контакт: {% if contact.primary %}<strong>{{ contact.contact }}</strong>{% else %}{{ contact.contact }}{% endif %}</span>
+        <span>{{ contact.get_kind_display }}</span>
+    </li>
+    {% endif %}
+
+    {% endfor %}
+</ul>
+<a href="{% url 'view_client' client.pk %}" class="menu-item">О клиенте</a>
+<br/>
+<a href="{% url 'delete_client' client.pk %}"
+   onclick="return confirm('Вы уверены, что хотите удалить этого клиента?');">Удалить</a>
+<hr/>
+
+{% endfor %}
+
+{% else %}
+<p>Пока пусто =)</p>
+{% endif %}
+
+{% endblock %}

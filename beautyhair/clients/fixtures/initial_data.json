@@ -1,0 +1,42 @@
+[
+  {
+    "model": "clients.client",
+    "pk": 1,
+    "fields": {
+      "first_name": "Slava",
+      "last_name": "Kalmykov",
+      "gender": "m",
+      "registration_date": "2024-01-09T16:34:56Z"
+    }
+  },
+  {
+    "model": "clients.contact",
+    "pk": 1,
+    "fields": {
+      "owner": 1,
+      "value": "+38(099) 765 89 75",
+      "kind": 0,
+      "primary": true
+    }
+  },
+    {
+    "model": "clients.client",
+    "pk": 2,
+    "fields": {
+      "first_name": "Alina",
+      "last_name": "Simakova",
+      "gender": "f",
+      "registration_date": "2024-01-09T16:35:46Z"
+    }
+  },
+    {
+    "model": "clients.contact",
+    "pk": 2,
+    "fields": {
+      "owner": 2,
+      "value": "@llina_27",
+      "kind": 1,
+      "primary": true
+    }
+  }
+  ]
