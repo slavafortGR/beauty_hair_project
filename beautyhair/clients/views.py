@@ -54,11 +54,10 @@ def view_client(request, pk):
 def edit_client(request, pk):
     client = get_object_or_404(Client, pk=pk)
     contact = Contact.objects.filter(owner=pk)
-
     if request.method == 'GET':
         context = {
             'form': AddClientForm(instance=client), 'pk': pk,
-            'contact_formset': AddContactForm(instance=contact)
+            'contact_formset': ContactFormSet(instance=contact)
         }
         return render(request, 'clients/client_form.html', context)
 
@@ -88,7 +87,6 @@ def add_contact(request, pk):
             return redirect('clients')
 
     return render(request, 'clients/client_form.html', {'contact_formset': contact_formset, 'pk': pk, 'add_contact_mode': True})
-
 
 
 def delete_client(request, pk):
