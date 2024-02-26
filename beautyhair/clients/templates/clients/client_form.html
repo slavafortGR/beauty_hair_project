@@ -14,6 +14,7 @@
     {% endif %}
   {% endif %}
     {% csrf_token %}
+    {{ form.non_field_errors }}
     {{ form.as_p }}
     {{ contact_formset.as_p }}
     <button type="submit">Save</button>

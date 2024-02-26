@@ -9,18 +9,22 @@ def new_client(request):
         form = AddClientForm(request.POST)
         contact_formset = ContactFormSet(request.POST, instance=Client())
         if form.is_valid() and contact_formset.is_valid():
-            client = Client.objects.create(
-                first_name=form.cleaned_data['first_name'],
-                last_name=form.cleaned_data['last_name'],
-                gender=form.cleaned_data['gender']
-            )
+            if not any(contact_form.cleaned_data.get('contact') for contact_form in contact_formset.forms):
+                form.add_error(None, 'Contact not to be empty')
+            else:
+                client = Client.objects.create(
+                    first_name=form.cleaned_data['first_name'],
+                    last_name=form.cleaned_data['last_name'],
+                    gender=form.cleaned_data['gender']
+                )
 
-            contact_formset.instance = client
-            contact_formset.save()
+                contact_formset.instance = client
+                contact_formset.save()
 
             return redirect('view_client', pk=client.pk)
         else:
-            return HttpResponse("Invalid data", status=400)
+            return render(request, 'clients/client_form.html',
+                          {'form': form, 'contact_formset': contact_formset, 'pk': None, 'create_mode': True})
     else:
         form = AddClientForm()
         contact_formset = ContactFormSet(instance=Client())

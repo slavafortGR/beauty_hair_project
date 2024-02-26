@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 
 from .models import Client, Contact
@@ -22,5 +23,12 @@ class AddContactForm(forms.ModelForm):
             'kind': forms.Select(),
             'primary': forms.CheckboxInput(),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        contact = cleaned_data.get('contact')
+        if not contact:
+            raise ValidationError('Contact not to be empty')
+        return cleaned_data
 
 ContactFormSet = inlineformset_factory(Client, Contact, form=AddContactForm, extra=1, can_delete=False)
