@@ -30,7 +30,7 @@ class Contact(models.Model):
     owner = models.ForeignKey(Client, on_delete=models.CASCADE)
     contact = models.CharField(max_length=160, null=False, blank=False, unique=True)
     kind = models.IntegerField(choices=CONTACT_KINDS, null=False, blank=False)
-    primary = models.BooleanField(default=False, null=False)
+    primary = models.BooleanField(default=True, null=False)
 
     class Meta:
         db_table = 'contacts'
