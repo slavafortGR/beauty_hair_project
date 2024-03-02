@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 
 class Client(models.Model):
@@ -34,3 +36,11 @@ class Contact(models.Model):
 
     class Meta:
         db_table = 'contacts'
+
+
+@receiver(pre_save, sender=Contact)
+def ensure_single_primary_contact(sender, instance, **kwargs):
+    if instance.primary:
+        other_primary_contacts = Contact.objects.filter(owner=instance.owner, primary=True).exclude(pk=instance.pk)
+        if other_primary_contacts.exists():
+            other_primary_contacts.update(primary=False)
