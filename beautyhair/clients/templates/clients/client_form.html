@@ -17,6 +17,31 @@
     {{ form.non_field_errors }}
     {{ form.as_p }}
     {{ contact_formset.as_p }}
-    <button type="submit">Save</button>
+
+    <button type="button" onclick="showConfirmationModal()">Save</button>
   </form>
+
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Вы действительно хотите переопределить основной контакт?</p>
+      <button onclick="confirmPrimaryContact()">Да</button>
+      <button onclick="cancel()">Отмена</button>
+    </div>
+  </div>
+
+  <script>
+    function showConfirmationModal() {
+      var modal = document.getElementById("confirmationModal");
+      modal.style.display = "block";
+    }
+
+    function confirmPrimaryContact() {
+      document.getElementById("confirmationModal").style.display = "none";
+      document.querySelector('form').submit();
+    }
+
+    function cancel() {
+      document.getElementById("confirmationModal").style.display = "none";
+    }
+  </script>
 {% endblock %}
