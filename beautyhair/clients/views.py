@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+
 from clients.forms import AddClientForm, ContactFormSet, AddContactForm
 from clients.models import Client, Contact
 
@@ -91,6 +93,18 @@ def add_contact(request, pk):
             return redirect('clients')
 
     return render(request, 'clients/client_form.html', {'contact_formset': contact_formset, 'pk': pk, 'add_contact_mode': True})
+
+
+@require_POST
+def delete_contact(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+
+    if request.method == 'POST':
+        client_pk = contact.client.pk
+        contact.delete()
+        return redirect('view_client', pk=client_pk)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
 def delete_client(request, pk):
