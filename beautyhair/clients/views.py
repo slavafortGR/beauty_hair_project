@@ -93,6 +93,16 @@ def add_contact(request, pk):
     return render(request, 'clients/client_form.html', {'contact_formset': contact_formset, 'pk': pk, 'add_contact_mode': True})
 
 
+def delete_contact(request, pk):
+    contact = get_object_or_404(Contact, pk=pk)
+
+    if request.method == 'POST':
+        contact.delete()
+        return redirect('clients')
+    else:
+        return HttpResponse("Method Not Allowed", status=405)
+
+
 def delete_client(request, pk):
     client = Client.objects.get(pk=pk)
     client.delete()

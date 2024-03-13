@@ -23,6 +23,10 @@
         <li>
             <span>Контакт: {% if contact_item.primary %}<strong>{{ contact_item.contact }}</strong>{% else %}{{ contact_item.contact }}{% endif %}</span>
             <span>{{ contact_item.get_kind_display }}</span>
+            <form action="{% url 'delete_contact' pk=contact_item.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот контакт?');">Delete Contact</button>
+            </form>
         </li>
         {% endfor %}
     </ul>
