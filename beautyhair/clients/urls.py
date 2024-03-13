@@ -7,6 +7,6 @@ urlpatterns = [
     path('new/', new_client, name='new_client'),
     path('<int:pk>/edit/', edit_client, name='edit_client'),
     path('<int:pk>/add_contact/', add_contact, name='add_contact'),
-    path('<int:pk>/delete/', delete_contact, name='delete_contact'),
+    path('<int:pk>/delete_contact/', delete_contact, name='delete_contact'),
     path('<int:pk>/delete/', delete_client, name='delete_client'),
 ]

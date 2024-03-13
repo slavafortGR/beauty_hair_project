@@ -106,7 +106,12 @@ def delete_contact(request, pk):
         return HttpResponse("Method Not Allowed", status=405)
 
 
+@require_POST
 def delete_client(request, pk):
     client = Client.objects.get(pk=pk)
-    client.delete()
-    return redirect('clients')
+
+    if request.method == 'POST':
+        client.delete()
+        return redirect('clients')
+    else:
+        return HttpResponse("Method Not Allowed", status=405)
