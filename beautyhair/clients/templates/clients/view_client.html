@@ -7,7 +7,6 @@
 <h1>{{ title }}</h1>
 <hr/>
 
-{% if client_info and contact_info %}
 <ul>
     <li>
         <span>{{ client_info.first_name }} {{ client_info.last_name }}</span>
@@ -23,19 +22,16 @@
         <li>
             <span>Контакт: {% if contact_item.primary %}<strong>{{ contact_item.contact }}</strong>{% else %}{{ contact_item.contact }}{% endif %}</span>
             <span>{{ contact_item.get_kind_display }}</span>
-            <form action="{% url 'delete_contact' pk=contact_item.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот контакт?');">Delete Contact</button>
-            </form>
         </li>
         {% endfor %}
     </ul>
 
-    <a href="{% url 'edit_client' pk=client_info.pk %}" class="menu-item">Редактировать</a></br>
-    <a href="{% url 'add_contact' pk=client_info.pk %}" class="menu-item">Добавить контакт</a>
+<div class="buttons-bottom">
+    <a href="{% url 'edit_client' pk=client_info.pk %}" class="menu-item">
+        <button type="button" class="edit-button">Редактировать</button>
+    </a>
+</div>
+
 </ul>
 
-{% else %}
-<p>Pass</p>
-{% endif %}
 {% endblock %}

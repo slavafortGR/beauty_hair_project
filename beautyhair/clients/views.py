@@ -80,32 +80,6 @@ def edit_client(request, pk):
     return render(request, 'clients/client_form.html')
 
 
-def add_contact(request, pk):
-    contact_formset = ContactFormSet(request.POST or None)
-
-    if request.method == 'POST':
-        if contact_formset.is_valid():
-            client = get_object_or_404(Client, pk=pk)
-            instances = contact_formset.save(commit=False)
-            for instance in instances:
-                instance.owner = client
-                instance.save()
-            return redirect('clients')
-
-    return render(request, 'clients/client_form.html', {'contact_formset': contact_formset, 'pk': pk, 'add_contact_mode': True})
-
-
-@require_POST
-def delete_contact(request, pk):
-    contact = get_object_or_404(Contact, pk=pk)
-
-    if request.method == 'POST':
-        contact.delete()
-        return redirect('clients')
-    else:
-        return HttpResponse("Method Not Allowed", status=405)
-
-
 @require_POST
 def delete_client(request, pk):
     client = Client.objects.get(pk=pk)
