@@ -18,30 +18,14 @@
     {{ form.as_p }}
     {{ contact_formset.as_p }}
 
-    <button type="button" onclick="showConfirmationModal()">Save</button>
+    <button type="submit">Save</button>
+    <button type="submit" name="delete" value="1" onclick="return confirmDelete()">Delete</button>
+
+    <script>
+      function confirmDelete() {
+        return confirm("Are you sure you want to delete this client?");
+      }
+    </script>
   </form>
 
-  <div id="confirmationModal" class="modal">
-    <div class="modal-content">
-      <p>Добавляется новый контакт. Вы можете переопределить основной контакт. Сохранить?</p>
-      <button onclick="confirmPrimaryContact()">Да</button>
-      <button onclick="cancel()">Отмена</button>
-    </div>
-  </div>
-
-  <script>
-    function showConfirmationModal() {
-      var modal = document.getElementById("confirmationModal");
-      modal.style.display = "block";
-    }
-
-    function confirmPrimaryContact() {
-      document.getElementById("confirmationModal").style.display = "none";
-      document.querySelector('form').submit();
-    }
-
-    function cancel() {
-      document.getElementById("confirmationModal").style.display = "none";
-    }
-  </script>
 {% endblock %}

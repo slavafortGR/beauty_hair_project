@@ -74,18 +74,8 @@ def edit_client(request, pk):
         if form.is_valid() and contact_formset.is_valid():
             form.save()
             contact_formset.save()
-
+            if 'delete' in request.POST:
+                client.delete()
             return redirect('clients')
 
     return render(request, 'clients/client_form.html')
-
-
-@require_POST
-def delete_client(request, pk):
-    client = Client.objects.get(pk=pk)
-
-    if request.method == 'POST':
-        client.delete()
-        return redirect('clients')
-    else:
-        return HttpResponse("Method Not Allowed", status=405)
