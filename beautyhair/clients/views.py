@@ -1,8 +1,6 @@
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_POST
 
-from clients.forms import AddClientForm, ContactFormSet, AddContactForm
+from clients.forms import AddClientForm, ContactFormSet
 from clients.models import Client, Contact
 
 

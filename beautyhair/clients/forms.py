@@ -21,7 +21,7 @@ class AddContactForm(forms.ModelForm):
         widgets = {
             'contact': forms.TextInput(),
             'kind': forms.Select(),
-            'primary': forms.CheckboxInput(),
+            'primary': forms.RadioSelect(),
         }
 
     def clean(self):
